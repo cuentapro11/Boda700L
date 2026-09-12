@@ -1,13 +1,194 @@
 // Variables globales
+let isPlaying = false;
+let player = null;
+let playerReady = false;
 let currentSlide = 0;
 let totalSlides = 0;
+let enableMusic = false;
+
+// Funciones globales para los botones del modal
+function enterWithMusicClick() {
+    enableMusic = true;
+    const modal = document.getElementById('welcomeModal');
+    if (modal) {
+        modal.style.display = 'none';
+    }
+    if (playerReady && player) {
+        document.getElementById('musicPlayer').style.display = 'block';
+        player.playVideo();
+        isPlaying = true;
+        updateMusicIcon();
+    }
+}
+
+function enterWithoutMusicClick() {
+    enableMusic = false;
+    const modal = document.getElementById('welcomeModal');
+    if (modal) {
+        modal.style.display = 'none';
+    }
+}
+
+// Función para configurar los botones directamente
+function setupModalButtons() {
+    const enterWithMusic = document.getElementById('enterWithMusic');
+    const enterWithoutMusic = document.getElementById('enterWithoutMusic');
+    const modal = document.getElementById('welcomeModal');
+
+    if (enterWithMusic) {
+        enterWithMusic.onclick = function() {
+            enableMusic = true;
+            if (modal) {
+                modal.style.display = 'none';
+            }
+            if (playerReady && player) {
+                const musicPlayer = document.getElementById('musicPlayer');
+                if (musicPlayer) musicPlayer.style.display = 'block';
+                player.playVideo();
+                isPlaying = true;
+                updateMusicIcon();
+            }
+        };
+    }
+
+    if (enterWithoutMusic) {
+        enterWithoutMusic.onclick = function() {
+            enableMusic = false;
+            if (modal) {
+                modal.style.display = 'none';
+            }
+        };
+    }
+}
 
 // Inicializar cuando el DOM esté listo
 document.addEventListener('DOMContentLoaded', function() {
     initializeCountdown();
     initializeCarousel();
+    setupModalButtons();
     initializeGuestGreeting();
+
+    // Mostrar el modal de bienvenida para elegir con/sin música
+    const modal = document.getElementById('welcomeModal');
+    if (modal) {
+        modal.style.display = 'flex';
+    }
+
+    // Se precarga el player de YouTube desde el inicio (no en el click) para
+    // que playVideo() pueda ejecutarse de forma síncrona dentro del gesto del
+    // usuario en enterWithMusicClick(). Esto es lo que exige iOS Safari.
+    loadYouTubeAPI();
 });
+
+// También configurar cuando la página esté completamente cargada
+window.addEventListener('load', function() {
+    setupModalButtons();
+});
+
+// Cargar la API de YouTube
+function loadYouTubeAPI() {
+    const script = document.createElement('script');
+    script.src = 'https://www.youtube.com/iframe_api';
+    document.body.appendChild(script);
+    window.onYouTubeIframeAPIReady = initializeYouTubePlayer;
+}
+
+// Función llamada por la API de YouTube
+function initializeYouTubePlayer() {
+    if (player) return; // ya inicializado, evita crear el player dos veces
+
+    player = new YT.Player('youtube-player', {
+        height: '1',
+        width: '1',
+        videoId: 'RAvMoGbSh24',
+        playerVars: {
+            autoplay: 0,
+            controls: 0,
+            disablekb: 1,
+            fs: 0,
+            loop: 1,
+            modestbranding: 1,
+            playsinline: 1,
+            rel: 0,
+            showinfo: 0,
+            iv_load_policy: 3,
+            playlist: 'RAvMoGbSh24'
+        },
+        events: {
+            'onReady': onPlayerReady,
+            'onStateChange': onPlayerStateChange,
+            'onError': onPlayerError
+        }
+    });
+}
+
+function onPlayerReady(event) {
+    playerReady = true;
+    const musicPlayer = document.getElementById('musicPlayer');
+    const musicToggle = document.getElementById('musicToggle');
+
+    if (musicToggle) {
+        musicToggle.addEventListener('click', toggleMusic);
+    }
+
+    if (enableMusic && !isPlaying) {
+        if (musicPlayer) musicPlayer.style.display = 'block';
+        event.target.playVideo();
+        isPlaying = true;
+        updateMusicIcon();
+    }
+}
+
+function onPlayerStateChange(event) {
+    if (event.data === YT.PlayerState.PLAYING) {
+        isPlaying = true;
+    } else if (event.data === YT.PlayerState.PAUSED) {
+        isPlaying = false;
+    }
+    updateMusicIcon();
+}
+
+function onPlayerError(event) {
+    console.log('Error al cargar el video de YouTube');
+    const musicPlayer = document.getElementById('musicPlayer');
+    musicPlayer.style.display = 'block';
+    isPlaying = false;
+    updateMusicIcon();
+}
+
+function toggleMusic() {
+    if (player) {
+        if (isPlaying) {
+            player.pauseVideo();
+            isPlaying = false;
+        } else {
+            player.playVideo();
+            isPlaying = true;
+        }
+        updateMusicIcon();
+    }
+}
+
+function updateMusicIcon() {
+    const volumeIcon = document.getElementById('volumeIcon');
+
+    if (volumeIcon) {
+        if (isPlaying) {
+            volumeIcon.innerHTML = `
+                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" fill="#222" stroke="#fff" stroke-width="1"></polygon>
+                <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.08" stroke="#222" stroke-width="2"></path>
+                <circle cx="6.5" cy="12" r="1" fill="#ffe27a"/>
+            `;
+        } else {
+            volumeIcon.innerHTML = `
+                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" fill="#222" stroke="#fff" stroke-width="1"></polygon>
+                <line x1="19" y1="9" x2="17" y2="11" stroke="#ff6b6b" stroke-width="2"></line>
+                <line x1="17" y1="9" x2="19" y2="11" stroke="#ff6b6b" stroke-width="2"></line>
+                <circle cx="6.5" cy="12" r="1" fill="#ff6b6b"/>
+            `;
+        }
+    }
+}
 
 // Countdown
 function initializeCountdown() {

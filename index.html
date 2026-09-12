@@ -142,6 +142,30 @@
 </head>
 <body>
     <div class="main-center">
+        <!-- Modal de Bienvenida -->
+        <div id="welcomeModal" class="modal-overlay">
+            <div class="welcome-hero">
+                <h1 class="welcome-title welcome-title-sm">Bienvenidos a la<br/>invitación de Elivel de la Cruz<br/>y Samuel Hidalgo</h1>
+                <p class="welcome-note">La música de fondo es parte de la experiencia</p>
+                <div class="welcome-actions">
+                    <button id="enterWithMusic" class="btn-gold" onclick="enterWithMusicClick()">Ingresar con música</button>
+                    <button id="enterWithoutMusic" class="btn-gold-outline" onclick="enterWithoutMusicClick()">Ingresar sin música</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reproductor de música -->
+        <div id="musicPlayer" class="music-player" style="display: none;">
+            <button id="musicToggle" class="music-button modern-icon" title="Reproducir/Pausar música">
+                <svg id="volumeIcon" width="20" height="20" viewBox="0 0 24 24" fill="none">
+                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" fill="#53402D" stroke="#fff" stroke-width="1"></polygon>
+                    <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.08" stroke="#53402D" stroke-width="2"></path>
+                    <circle cx="6.5" cy="12" r="1" fill="#A3AD82"/>
+                </svg>
+            </button>
+            <div id="youtube-player" style="position: absolute; top: -9999px; left: -9999px; width: 1px; height: 1px; opacity: 0; pointer-events: none;"></div>
+        </div>
+
         <!-- Hero Section -->
         <div class="hero-section">
             <img class="hero-bg" src="foto0.jpg" alt="Portada boda Ana y Carlos">
@@ -205,7 +229,7 @@
             <img src="separador-flores.png" alt="">
         </div>
         <section class="events-section">
-            <div class="events-container">
+            <div class="events-container events-container-single">
                 <!-- Ceremony -->
                 <div class="event-card">
                     <div class="event-icon modern-icon ceremonia-icon">
@@ -235,35 +259,6 @@
                         <p class="event-address">Loma de Los Ángeles, La Vega</p>
                     </div>
                     <button class="btn-wedding" onclick="openLocation('ceremony')">¿Cómo llegar?</button>
-                </div>
-
-                <!-- Celebration / Reception -->
-                <div class="event-card">
-                    <div class="event-icon modern-icon">
-                        <svg width="110" height="110" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
-                            <g transform="rotate(-18 20 32)">
-                                <path d="M12 6 H28 L24 26 A6 6 0 0 1 16 26 Z" fill="#53402D"/>
-                                <rect x="18.5" y="26" width="3" height="14" fill="#53402D"/>
-                                <rect x="12" y="40" width="16" height="3" rx="1.5" fill="#53402D"/>
-                            </g>
-                            <g transform="rotate(18 44 32)">
-                                <path d="M36 6 H52 L48 26 A6 6 0 0 1 40 26 Z" fill="#53402D"/>
-                                <rect x="42.5" y="26" width="3" height="14" fill="#53402D"/>
-                                <rect x="36" y="40" width="16" height="3" rx="1.5" fill="#53402D"/>
-                            </g>
-                        </svg>
-                    </div>
-                    <h3 class="event-title">Celebración</h3>
-                    <div class="event-details">
-                        <h4>Día</h4>
-                        <p>Viernes 19 de Marzo, 2027 - 6:00pm</p>
-                    </div>
-                    <div class="event-details">
-                        <h4>Lugar</h4>
-                        <p>Casa Los Pinos</p>
-                        <p class="event-address">Loma de Los Ángeles, La Vega</p>
-                    </div>
-                    <button class="btn-wedding" onclick="openLocation('reception')">¿Cómo llegar?</button>
                 </div>
             </div>
         </section>
