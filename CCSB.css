@@ -23,6 +23,12 @@
     box-sizing: border-box;
 }
 
+html {
+    font-size: 87.5%; /* texto general más regular en toda la página (antes se veía muy grande) */
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+
 html, body {
     min-height: 100%;
     width: 100%;
