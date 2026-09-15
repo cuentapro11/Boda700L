@@ -8,6 +8,11 @@ let enableMusic = false;
 
 // Funciones globales para los botones del modal
 function enterWithMusicClick() {
+    // El botón permanece deshabilitado hasta que el player de YouTube está
+    // realmente listo (ver onPlayerReady), así que para cuando el usuario
+    // puede hacer click aquí, player.playVideo() siempre se ejecuta de forma
+    // síncrona dentro del gesto del usuario. Esto es justo lo que exige
+    // iOS Safari para permitir la reproducción de audio/video.
     enableMusic = true;
     const modal = document.getElementById('welcomeModal');
     if (modal) {
@@ -78,6 +83,11 @@ document.addEventListener('DOMContentLoaded', function() {
     // que playVideo() pueda ejecutarse de forma síncrona dentro del gesto del
     // usuario en enterWithMusicClick(). Esto es lo que exige iOS Safari.
     loadYouTubeAPI();
+
+    // Salvaguarda: si por lo que sea el player no está listo en unos
+    // segundos (red lenta, bloqueo, etc.), se habilita igual el botón para
+    // no dejar al invitado atascado en el modal de bienvenida.
+    setTimeout(enableMusicButton, 6000);
 });
 
 // También configurar cuando la página esté completamente cargada
@@ -131,11 +141,27 @@ function onPlayerReady(event) {
         musicToggle.addEventListener('click', toggleMusic);
     }
 
+    enableMusicButton();
+
     if (enableMusic && !isPlaying) {
         if (musicPlayer) musicPlayer.style.display = 'block';
         event.target.playVideo();
         isPlaying = true;
         updateMusicIcon();
+    }
+}
+
+// Habilita el botón "Ingresar con música" una vez el player está listo
+// (o tras un tiempo máximo de espera, para no dejar al usuario atascado
+// si YouTube tarda o falla en cargar).
+function enableMusicButton() {
+    const btn = document.getElementById('enterWithMusic');
+    const label = document.getElementById('enterWithMusicLabel');
+    if (btn && btn.disabled) {
+        btn.disabled = false;
+    }
+    if (label) {
+        label.textContent = 'Ingresar con música';
     }
 }
 
@@ -154,6 +180,7 @@ function onPlayerError(event) {
     musicPlayer.style.display = 'block';
     isPlaying = false;
     updateMusicIcon();
+    enableMusicButton();
 }
 
 function toggleMusic() {
@@ -355,15 +382,17 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // Funciones de los botones
+// Nota: esta es una plantilla de ejemplo, así que los botones de
+// "¿Cómo llegar?", "Subir Fotos" y "Confirmar Asistencia" no llevan a
+// ningún enlace real todavía. Cuando se use para una boda real, basta con
+// reemplazar cada URL de ejemplo por el enlace definitivo (Google Maps,
+// álbum de fotos compartido, formulario de RSVP, etc.).
 function openLocation(location) {
-    // Casa Los Pinos, Loma de Los Ángeles, La Vega (mismo lugar para ambos eventos)
-    const mapsUrl = "https://www.google.com/maps/place/19%C2%B016'06.8%22N+70%C2%B033'34.8%22W/@19.2685556,-70.5596667,17z/data=!3m1!4b1!4m4!3m3!8m2!3d19.2685556!4d-70.5596667?hl=es&entry=ttu&g_ep=EgoyMDI2MDQyOS4wIKXMDSoASAFQAw%3D%3D";
-    window.open(mapsUrl, '_blank');
+    showToast('Ejemplo', 'Aquí iría el enlace a Google Maps con la dirección real del evento.');
 }
 
 function sharePhotos() {
-    const photosUrl = "https://photos.app.goo.gl/JbJYbbENQaUfsKLd6";
-    window.open(photosUrl, '_blank');
+    showToast('Ejemplo', 'Aquí iría el enlace al álbum donde los invitados suben sus fotos.');
 }
 
 function showDressCode() {
@@ -411,8 +440,7 @@ function closeGiftModal(event) {
 }
 
 function confirmAttendance() {
-    const googleFormUrl = "https://docs.google.com/forms/d/e/1FAIpQLSegHnYfHk-X4eCj1FfVN3MJ5IzeRsDoL3shdrsrKsatAeF2cg/viewform?usp=header";
-    window.open(googleFormUrl, '_blank');
+    showToast('Ejemplo', 'Aquí iría el enlace al formulario real de confirmación de asistencia.');
 }
 
 // Sistema de Toast

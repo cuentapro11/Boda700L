@@ -3,10 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Elivel & Samuel - Invitación de Boda</title>
+    <title>Ana & Carlos - Invitación de Boda</title>
     <link rel="preload" as="image" href="foto0.jpg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://www.youtube.com">
+    <link rel="preconnect" href="https://www.google.com">
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="CCSB.css">
         <style>
@@ -33,7 +35,7 @@
         .carousel-item img {
             max-width: 100%;
             height: 100% !important;
-            object-fit: cover;
+            object-fit: contain;
             border-radius: 0;
             box-shadow: 0 10px 24px rgba(110,124,78,0.35);
             transition: transform 0.25s ease, box-shadow 0.25s ease;
@@ -44,7 +46,7 @@
             width: 90% !important;
             height: 100% !important;
             margin: 0 auto;
-            object-fit: cover !important;
+            object-fit: contain !important;
             background: #6E7C4E !important;
             border: 10px solid #6E7C4E !important;
             border-bottom-width: 38px !important;
@@ -62,7 +64,7 @@
             .carousel-item {
                 flex: 0 0 100% !important; /* 1 imagen por vista en móvil */
                 padding: 0 6px !important;
-                height: 380px !important;
+                height: 460px !important;
                 display: flex !important;
                 justify-content: center !important;
                 align-items: center !important;
@@ -70,8 +72,8 @@
             .carousel-item img {
                 width: 100% !important;
                 height: 100% !important;
-                max-height: 380px !important;
-                object-fit: cover !important;
+                max-height: 460px !important;
+                object-fit: contain !important;
                 transform: none !important;
             }
             .framed-photo {
@@ -87,11 +89,11 @@
         
         @media (max-width: 480px) {
             .carousel-item img {
-                max-height: 320px !important;
-                height: 300px !important;
+                max-height: 400px !important;
+                height: 400px !important;
                 width: 100% !important;
                 max-width: 100% !important;
-                object-fit: cover !important;
+                object-fit: contain !important;
                 border-radius: 0;
                 transform: none !important;
             }
@@ -104,7 +106,7 @@
             .carousel-item {
                 flex: 0 0 100% !important;
                 padding: 0 8px !important;
-                height: 320px !important;
+                height: 400px !important;
             }
             
             .carousel-track-container {
@@ -145,10 +147,10 @@
         <!-- Modal de Bienvenida -->
         <div id="welcomeModal" class="modal-overlay">
             <div class="welcome-hero">
-                <h1 class="welcome-title welcome-title-sm">Bienvenidos a la<br/>invitación de Elivel de la Cruz<br/>y Samuel Hidalgo</h1>
+                <h1 class="welcome-title welcome-title-sm">Bienvenidos a la<br/>invitación de Ana Pérez<br/>y Carlos Gómez</h1>
                 <p class="welcome-note">La música de fondo es parte de la experiencia</p>
                 <div class="welcome-actions">
-                    <button id="enterWithMusic" class="btn-gold" onclick="enterWithMusicClick()">Ingresar con música</button>
+                    <button id="enterWithMusic" class="btn-gold" onclick="enterWithMusicClick()" disabled><span id="enterWithMusicLabel">Cargando música...</span></button>
                     <button id="enterWithoutMusic" class="btn-gold-outline" onclick="enterWithoutMusicClick()">Ingresar sin música</button>
                 </div>
             </div>
@@ -176,7 +178,7 @@
             <div class="hero-content">
                 <div class="hero-text">
                     <div class="date date-hidden" aria-hidden="true">15.11.2026</div>
-                    <h1 class="names">Elivel de la Cruz <span class="ampersand">&amp;</span> Samuel Hidalgo</h1>
+                    <h1 class="names">Ana Pérez <span class="ampersand">&amp;</span> Carlos Gómez</h1>
                     <blockquote class="quote">
                         "Todos somos mortales,<br />
                         hasta el primer beso y la segunda copa de vino"
@@ -255,8 +257,8 @@
                     </div>
                     <div class="event-details">
                         <h4>Lugar</h4>
-                        <p>Casa Los Pinos</p>
-                        <p class="event-address">Loma de Los Ángeles, La Vega</p>
+                        <p>Salón Jardín Las Palmas</p>
+                        <p class="event-address">Av. John F. Kennedy #45, Santo Domingo, República Dominicana</p>
                     </div>
                     <button class="btn-wedding" onclick="openLocation('ceremony')">¿Cómo llegar?</button>
                 </div>
@@ -424,7 +426,7 @@
         <footer class="footer">
             <div class="footer-content">
                 <p>Con amor,</p>
-                <h3>Elivel de la Cruz &amp; Samuel Hidalgo</h3>
+                <h3>Ana Pérez &amp; Carlos Gómez</h3>
                 <p class="footer-date">19 de Marzo, 2027</p>
             </div>
         </footer>
@@ -466,7 +468,7 @@
                 <div class="gift-account">
                     <p><strong>[Nombre del banco]</strong></p>
                     <p>Cuenta de ahorros: [Número de cuenta]</p>
-                    <p>A nombre de: Elivel de la Cruz</p>
+                    <p>A nombre de: Ana Pérez</p>
                 </div>
             </div>
         </div>
