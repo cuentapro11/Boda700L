@@ -146,6 +146,38 @@
             }
         }
 
+        /* Icono animado de Celebración: piezas de confeti flotando/girando
+           sin parar alrededor de un destello central. */
+        .confetti-icon .confetti-piece {
+            transform-box: fill-box;
+            transform-origin: center;
+            animation: confetti-float 2.6s ease-in-out infinite;
+        }
+        .confetti-icon .cf-1 { animation-delay: 0s; }
+        .confetti-icon .cf-2 { animation-delay: 0.3s; }
+        .confetti-icon .cf-3 { animation-delay: 0.6s; }
+        .confetti-icon .cf-4 { animation-delay: 0.9s; }
+        .confetti-icon .cf-5 { animation-delay: 1.2s; }
+        .confetti-icon .cf-6 { animation-delay: 1.5s; }
+        .confetti-icon .cf-7 { animation-delay: 1.8s; }
+        .confetti-icon .cf-8 { animation-delay: 2.1s; }
+
+        @keyframes confetti-float {
+            0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.85; }
+            50% { transform: translateY(-4px) rotate(18deg); opacity: 1; }
+        }
+
+        .confetti-icon .confetti-burst {
+            transform-box: fill-box;
+            transform-origin: center;
+            animation: confetti-burst-pulse 2.6s ease-in-out infinite;
+        }
+
+        @keyframes confetti-burst-pulse {
+            0%, 100% { transform: scale(0.9) rotate(0deg); opacity: 0.7; }
+            50% { transform: scale(1.15) rotate(20deg); opacity: 1; }
+        }
+
     </style>
 </head>
 <body>
@@ -237,7 +269,7 @@
             <img src="separador-flores.png" alt="">
         </div>
         <section class="events-section">
-            <div class="events-container events-container-single">
+            <div class="events-container">
                 <!-- Ceremony -->
                 <div class="event-card">
                     <div class="event-icon modern-icon ceremonia-icon">
@@ -267,6 +299,51 @@
                         <p class="event-address">Av. John F. Kennedy #45, Santo Domingo, República Dominicana</p>
                     </div>
                     <button class="btn-wedding" onclick="openLocation('ceremony')">¿Cómo llegar?</button>
+                </div>
+
+                <!-- Celebration -->
+                <div class="event-card">
+                    <div class="event-icon modern-icon confetti-icon">
+                        <svg width="110" height="110" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+                            <g class="confetti-piece cf-1">
+                                <rect x="8" y="10" width="6" height="6" rx="1" fill="#6E7C4E" transform="rotate(20 11 13)"/>
+                            </g>
+                            <g class="confetti-piece cf-2">
+                                <rect x="46" y="8" width="5" height="9" rx="1.5" fill="#53402D" transform="rotate(-25 48.5 12.5)"/>
+                            </g>
+                            <g class="confetti-piece cf-3">
+                                <circle cx="52" cy="28" r="3" fill="#C9A34E"/>
+                            </g>
+                            <g class="confetti-piece cf-4">
+                                <path d="M10 42 L17 40 L15 47 Z" fill="#9CAA80"/>
+                            </g>
+                            <g class="confetti-piece cf-5">
+                                <rect x="26" y="4" width="5" height="5" rx="1" fill="#C9A34E" transform="rotate(40 28.5 6.5)"/>
+                            </g>
+                            <g class="confetti-piece cf-6">
+                                <circle cx="12" cy="30" r="2.5" fill="#53402D"/>
+                            </g>
+                            <g class="confetti-piece cf-7">
+                                <path d="M48 46 L55 44 L53 51 Z" fill="#6E7C4E"/>
+                            </g>
+                            <g class="confetti-piece cf-8">
+                                <rect x="30" y="50" width="5" height="5" rx="1" fill="#53402D" transform="rotate(-15 32.5 52.5)"/>
+                            </g>
+                            <path class="confetti-burst" d="M32 20 L34.4 27.6 L42 30 L34.4 32.4 L32 40 L29.6 32.4 L22 30 L29.6 27.6 Z" fill="#53402D"/>
+                        </svg>
+                    </div>
+                    <h3 class="event-title">Celebración</h3>
+                    <div class="event-details">
+                        <h4>Hora</h4>
+                        <p>Viernes 19 de Marzo, 2027 - 6:00pm</p>
+                        <p class="event-punctuality">Recepción, cena y fiesta</p>
+                    </div>
+                    <div class="event-details">
+                        <h4>Lugar</h4>
+                        <p>Villa Toscana Eventos</p>
+                        <p class="event-address">Av. Abraham Lincoln #210, Santo Domingo, República Dominicana</p>
+                    </div>
+                    <button class="btn-wedding" onclick="openLocation('reception')">¿Cómo llegar?</button>
                 </div>
             </div>
         </section>
